@@ -1,0 +1,6 @@
+# Site root (Apache). Ensures the callback script is not blocked as a “sensitive” path.
+<IfModule mod_authz_core.c>
+  <Files "send-callback.php">
+    Require all granted
+  </Files>
+</IfModule>

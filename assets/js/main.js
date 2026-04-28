@@ -118,10 +118,13 @@
 
   function errorMessageForNonJsonResponse(status) {
     if (status === 404) {
-      return "The mail script was not found. Deploy the server/ folder with PHP on your host, or set data-callback-endpoint on the form to the full URL of send-callback.php.";
+      return "The mail script was not found. Upload send-callback.php to your site root with the server/ folder (vendor + .env), or set data-callback-endpoint to the full HTTPS URL of send-callback.php.";
     }
-    if (status === 405 || status === 403) {
-      return "The server blocked this request. Check that send-callback.php allows POST and PHP is enabled.";
+    if (status === 403) {
+      return "Access denied (403). Your host or firewall may block POST to certain paths. Use send-callback.php in the document root (not only under /server/) and ask the host to allow PHP POST for that file.";
+    }
+    if (status === 405) {
+      return "Method not allowed (405). The URL is often served without PHP (static only) or POST is disabled. Ensure send-callback.php is in the document root and PHP handles .php files.";
     }
     if (status >= 500) {
       return "The server returned an error (" + status + "). Check PHP error logs and mail configuration.";
@@ -138,7 +141,7 @@
     if (window.location.protocol === "file:") {
       event.preventDefault();
       setStatus(
-        "This form cannot send mail when the page is opened as a local file. Upload the site to HTTPS hosting with PHP, or use a local server (e.g. PHP built-in server) that includes server/send-callback.php.",
+        "This form cannot send mail when the page is opened as a local file. Upload the site to HTTPS hosting with PHP, or run from the project folder: php -S localhost:8080 and open http://localhost:8080/ (send-callback.php must be reachable).",
         "error"
       );
       return;
@@ -169,7 +172,9 @@
     event.preventDefault();
 
     var endpointRaw =
-      callbackForm.getAttribute("data-callback-endpoint") || callbackForm.getAttribute("action") || "server/send-callback.php";
+      callbackForm.getAttribute("data-callback-endpoint") ||
+      callbackForm.getAttribute("action") ||
+      "send-callback.php";
     var endpointResolved = resolveCallbackEndpoint(endpointRaw);
     var crossOrigin = (function () {
       try {
@@ -186,15 +191,13 @@
       submitBtn.textContent = "Sending…";
     }
 
-    fetch(endpointResolved, {
+    var fetchOpts = {
       method: "POST",
       body: body,
       credentials: crossOrigin ? "omit" : "same-origin",
-      mode: "cors",
-      headers: {
-        Accept: "application/json",
-      },
-    })
+      mode: crossOrigin ? "cors" : "same-origin",
+    };
+    fetch(endpointResolved, fetchOpts)
       .then(function (res) {
         return res.text().then(function (text) {
           var data = null;
