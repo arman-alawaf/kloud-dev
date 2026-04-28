@@ -1,0 +1,4 @@
+# Deny HTTP access to environment and Composer files (Apache).
+<FilesMatch "^(\.env|composer\.(json|lock))$">
+  Require all denied
+</FilesMatch>

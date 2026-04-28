@@ -148,3 +148,19 @@ a{
     box-shadow: 0 0 0 var(--bs-navbar-toggler-focus-width);
     box-shadow: none;
 }
+
+/* Careers section — modals aligned with Kloud card treatment */
+#careers .modal-content {
+    border-radius: 24px;
+    border: 1px solid #00e2ff;
+    box-shadow: 6px 7px 18.2px 4px #00000040;
+}
+#careers .modal-header {
+    border-bottom-color: rgba(0, 226, 255, 0.35);
+}
+#careers .modal-footer .btn-primary {
+    --bs-btn-bg: #8f18ff;
+    --bs-btn-border-color: #8f18ff;
+    --bs-btn-hover-bg: #7515d9;
+    --bs-btn-hover-border-color: #7515d9;
+}
