@@ -266,8 +266,9 @@
 }
 
 .ux-inline-30 {
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+  /* border-top-left-radius: 10px;
+  border-top-right-radius: 10px; */
+  border-radius: 10px;
   background: linear-gradient(90deg, #00E2FF 0%, #8F18FF 100%);
   box-shadow: 0px 4px 4px -3px #00000040;
   padding: 20px 15px;
@@ -381,7 +382,7 @@
 .ux-inline-44 {
   position: fixed;
   right: 22px;
-  bottom: 22px;
+  bottom: 12px;
   width: 48px;
   height: 48px;
   border-radius: 50%;

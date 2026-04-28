@@ -293,3 +293,28 @@
   toggleBackToTopVisibility();
 })();
 
+(function initComingSoonPremiumPopups() {
+  var triggerToModalId = {
+    "quick-pay": "comingSoonQuickPayModal",
+    "smart-care": "comingSoonSmartCareModal",
+  };
+
+  var triggers = Array.from(document.querySelectorAll("[data-coming-soon-trigger]"));
+  if (!triggers.length) return;
+
+  triggers.forEach(function (trigger) {
+    trigger.addEventListener("click", function (event) {
+      event.preventDefault();
+
+      var featureKey = trigger.getAttribute("data-coming-soon-trigger");
+      var modalId = featureKey ? triggerToModalId[featureKey] : null;
+      if (!modalId) return;
+
+      var modalEl = document.getElementById(modalId);
+      if (!modalEl || !window.bootstrap || !window.bootstrap.Modal) return;
+
+      window.bootstrap.Modal.getOrCreateInstance(modalEl).show();
+    });
+  });
+})();
+
