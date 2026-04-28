@@ -116,6 +116,29 @@
     }
   }
 
+  /**
+   * Prefer root-absolute /send-callback.php so POST always hits doc root PHP (not ./send-callback in a subfolder).
+   * Override with meta name="kloud-callback-api" content="full URL" for static hosts (no PHP).
+   */
+  function getCallbackPostUrl(form) {
+    var meta = document.querySelector('meta[name="kloud-callback-api"]');
+    if (meta) {
+      var mc = (meta.getAttribute("content") || "").trim();
+      if (mc.length > 0) {
+        try {
+          return new URL(mc).href;
+        } catch (metaErr) {
+          /* ignore */
+        }
+      }
+    }
+    var raw =
+      (form && form.getAttribute("data-callback-endpoint")) ||
+      (form && form.getAttribute("action")) ||
+      "/send-callback.php";
+    return resolveCallbackEndpoint(raw);
+  }
+
   function errorMessageForNonJsonResponse(status) {
     if (status === 404) {
       return "The mail script was not found. Upload send-callback.php to your site root with the server/ folder (vendor + .env), or set data-callback-endpoint to the full HTTPS URL of send-callback.php.";
@@ -141,7 +164,7 @@
     if (window.location.protocol === "file:") {
       event.preventDefault();
       setStatus(
-        "This form cannot send mail when the page is opened as a local file. Upload the site to HTTPS hosting with PHP, or run from the project folder: php -S localhost:8080 and open http://localhost:8080/ (send-callback.php must be reachable).",
+        "This form cannot send mail when the page is opened as a local file. Upload the site to HTTPS hosting with PHP, or run: php -S localhost:8080 from the site root and open http://localhost:8080/ (POST must reach /send-callback.php).",
         "error"
       );
       return;
@@ -171,11 +194,7 @@
 
     event.preventDefault();
 
-    var endpointRaw =
-      callbackForm.getAttribute("data-callback-endpoint") ||
-      callbackForm.getAttribute("action") ||
-      "send-callback.php";
-    var endpointResolved = resolveCallbackEndpoint(endpointRaw);
+    var endpointResolved = getCallbackPostUrl(callbackForm);
     var crossOrigin = (function () {
       try {
         return new URL(endpointResolved).origin !== window.location.origin;
