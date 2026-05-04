@@ -4,8 +4,9 @@
 }
 .bg-purple {
     --bs-bg-opacity: 1;
-    /* background-color: #8F18FF; */
-    background-image: url(../img/Group\ 7.png);
+    /* Fallback paint + matches edge of artwork while Group 7.png decodes. */
+    /* background-color: #8f18ff; */
+    background-image: url("../img/Group%207.png");
     background-repeat: no-repeat;
     background-position: left center;
     background-size: cover;
@@ -65,6 +66,7 @@ a{
     }
 
     .bg-purple {
+        background-color: #8f18ff;
         background-size: cover;
         background-position: center;
     }
@@ -163,4 +165,499 @@ a{
     --bs-btn-border-color: #8f18ff;
     --bs-btn-hover-bg: #7515d9;
     --bs-btn-hover-border-color: #7515d9;
+}
+
+/* Services nav — hover (desktop) + styled panel; click/tap still works via Bootstrap */
+.navbar .nav-dropdown-hover {
+    position: relative;
+}
+
+.navbar .nav-dropdown-hover > .dropdown-toggle::after {
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.navbar .nav-dropdown-hover:hover > .dropdown-toggle::after,
+.navbar .nav-dropdown-hover:focus-within > .dropdown-toggle::after,
+.navbar .nav-dropdown-hover:has(.dropdown-menu.show) > .dropdown-toggle::after {
+    transform: rotate(-180deg);
+}
+
+.navbar .dropdown-menu-services {
+    --services-menu-bg: rgba(28, 12, 48, 0.96);
+    --services-menu-border: rgba(0, 226, 255, 0.35);
+    min-width: 13rem;
+    padding: 0.55rem 0;
+    margin-top: 0;
+    border-radius: 14px;
+    background: var(--services-menu-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--services-menu-border);
+    box-shadow:
+        0 18px 40px rgba(0, 0, 0, 0.35),
+        0 0 0 1px rgba(143, 24, 255, 0.12) inset;
+}
+
+.navbar .dropdown-menu-services .dropdown-item {
+    color: rgba(255, 255, 255, 0.92);
+    font-size: 0.82rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.65rem 1.15rem;
+    transition:
+        color 0.25s ease,
+        background-color 0.25s ease,
+        padding-left 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.navbar .dropdown-menu-services .dropdown-item:hover,
+.navbar .dropdown-menu-services .dropdown-item:focus {
+    color: #fff;
+    background: linear-gradient(90deg, rgba(143, 24, 255, 0.35), rgba(0, 226, 255, 0.12));
+    padding-left: 1.35rem;
+}
+
+.navbar .dropdown-menu-services .dropdown-item:active {
+    background: linear-gradient(90deg, rgba(143, 24, 255, 0.5), rgba(0, 226, 255, 0.2));
+}
+
+@media (min-width: 992px) {
+    .navbar .nav-dropdown-hover .dropdown-menu-services {
+        display: block !important;
+        top: 100%;
+        left: 50%;
+        transform: translate3d(-50%, 10px, 0) scale(0.98);
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transition:
+            opacity 0.38s cubic-bezier(0.22, 1, 0.36, 1),
+            transform 0.38s cubic-bezier(0.22, 1, 0.36, 1),
+            visibility 0.38s;
+    }
+
+    .navbar .nav-dropdown-hover .dropdown-menu-services::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: -10px;
+        height: 10px;
+    }
+
+    .navbar .nav-dropdown-hover:hover .dropdown-menu-services,
+    .navbar .nav-dropdown-hover:focus-within .dropdown-menu-services,
+    .navbar .nav-dropdown-hover:has(.dropdown-menu.show) .dropdown-menu-services {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transform: translate3d(-50%, 0, 0) scale(1) !important;
+    }
+
+    .navbar .nav-dropdown-hover .dropdown-menu-services > li > .dropdown-item {
+        opacity: 0;
+        transform: translateX(-8px);
+        transition:
+            opacity 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+            transform 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+            color 0.25s ease,
+            background-color 0.25s ease,
+            padding-left 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .navbar .nav-dropdown-hover:hover .dropdown-menu-services > li:nth-child(1) > .dropdown-item,
+    .navbar .nav-dropdown-hover:focus-within .dropdown-menu-services > li:nth-child(1) > .dropdown-item,
+    .navbar .nav-dropdown-hover:has(.dropdown-menu.show) .dropdown-menu-services > li:nth-child(1) > .dropdown-item {
+        opacity: 1;
+        transform: translateX(0);
+        transition-delay: 0.04s;
+    }
+
+    .navbar .nav-dropdown-hover:hover .dropdown-menu-services > li:nth-child(2) > .dropdown-item,
+    .navbar .nav-dropdown-hover:focus-within .dropdown-menu-services > li:nth-child(2) > .dropdown-item,
+    .navbar .nav-dropdown-hover:has(.dropdown-menu.show) .dropdown-menu-services > li:nth-child(2) > .dropdown-item {
+        opacity: 1;
+        transform: translateX(0);
+        transition-delay: 0.1s;
+    }
+
+    .navbar .nav-dropdown-hover:hover .dropdown-menu-services > li:nth-child(3) > .dropdown-item,
+    .navbar .nav-dropdown-hover:focus-within .dropdown-menu-services > li:nth-child(3) > .dropdown-item,
+    .navbar .nav-dropdown-hover:has(.dropdown-menu.show) .dropdown-menu-services > li:nth-child(3) > .dropdown-item {
+        opacity: 1;
+        transform: translateX(0);
+        transition-delay: 0.16s;
+    }
+
+    .navbar .nav-dropdown-hover:hover .dropdown-menu-services > li:nth-child(4) > .dropdown-item,
+    .navbar .nav-dropdown-hover:focus-within .dropdown-menu-services > li:nth-child(4) > .dropdown-item,
+    .navbar .nav-dropdown-hover:has(.dropdown-menu.show) .dropdown-menu-services > li:nth-child(4) > .dropdown-item {
+        opacity: 1;
+        transform: translateX(0);
+        transition-delay: 0.22s;
+    }
+
+    .navbar .nav-dropdown-hover:hover .dropdown-menu-services > li:nth-child(5) > .dropdown-item,
+    .navbar .nav-dropdown-hover:focus-within .dropdown-menu-services > li:nth-child(5) > .dropdown-item,
+    .navbar .nav-dropdown-hover:has(.dropdown-menu.show) .dropdown-menu-services > li:nth-child(5) > .dropdown-item {
+        opacity: 1;
+        transform: translateX(0);
+        transition-delay: 0.28s;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .navbar .nav-dropdown-hover .dropdown-menu-services {
+        position: static !important;
+        transform: none !important;
+        margin-top: 0.35rem;
+        margin-bottom: 0.25rem;
+        width: 100%;
+        box-shadow: none;
+    }
+}
+
+#service-infrastructure,
+#service-internet,
+#service-vas,
+#service-cloud {
+    scroll-margin-top: 5.5rem;
+}
+
+/* Inner service pages (e.g. internet.html) */
+.page-breadcrumb .breadcrumb {
+    --bs-breadcrumb-divider-color: rgba(0, 0, 0, 0.35);
+    margin-bottom: 0;
+}
+
+.page-breadcrumb .breadcrumb-item a {
+    color: #6c757d;
+    text-decoration: none;
+}
+
+.page-breadcrumb .breadcrumb-item a:hover {
+    color: #8f18ff;
+}
+
+.page-breadcrumb .breadcrumb-item.active {
+    color: #212529;
+    font-weight: 600;
+}
+
+.page-service-hero-img {
+    width: 100%;
+    max-height: min(300px, 55vw);
+    object-fit: cover;
+}
+
+.page-service-icon-wrap {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(143, 24, 255, 0.22), rgba(0, 226, 255, 0.14));
+    border: 1px solid rgba(0, 226, 255, 0.4);
+    color: #8f18ff;
+    font-size: 1.35rem;
+}
+
+.page-service-card {
+    transition:
+        transform 0.38s cubic-bezier(0.22, 1, 0.36, 1),
+        box-shadow 0.38s ease;
+}
+
+.page-service-card:hover {
+    transform: translateY(-5px);
+    /* box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1); */
+}
+
+a.ux-inline-18 {
+    color: #1a1a1a;
+    font-weight: 600;
+}
+
+a.ux-inline-18:hover {
+    color: #000;
+}
+
+.navbar .dropdown-menu-services .dropdown-item.active,
+.navbar .dropdown-menu-services .dropdown-item.active:hover,
+.navbar .dropdown-menu-services .dropdown-item.active:focus {
+    color: #fff;
+    background: linear-gradient(90deg, rgba(143, 24, 255, 0.55), rgba(0, 226, 255, 0.28));
+    padding-left: 1.35rem;
+}
+
+/* VAS page — pricing-style card2 grid with flexible body height */
+.page-vas-grid .card2 {
+    display: flex;
+    flex-direction: column;
+    border-radius: 12px;
+    overflow: hidden;
+    /* box-shadow: 6px 7px 18.2px 4px rgba(0, 0, 0, 0.15); */
+}
+
+.page-vas-grid .card2-body.ux-inline-26 {
+    height: auto;
+    flex: 1 1 auto;
+    min-height: 13.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.page-vas-grid .card2-body.ux-inline-26 ul {
+    padding-left: 1.15rem;
+}
+
+.page-vas-grid .ux-inline-29 {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    min-height: 0;
+}
+
+/* Cloud Solutions page */
+.page-cloud-pillars .card1 {
+    min-height: 100%;
+}
+
+.page-cloud-callout p {
+    font-size: 0.95rem;
+    line-height: 1.55;
+}
+
+.page-cloud-deep .ux-inline-29 {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    min-height: 0;
+}
+
+.page-cloud-deep .ux-inline-17 {
+    font-size: 0.875rem;
+    line-height: 1.55;
+}
+
+/* About page */
+.page-about-hero .page-service-hero-img {
+    max-height: 320px;
+    width: auto;
+    object-fit: contain;
+}
+
+.page-about-vision .page-service-card .ux-inline-17 {
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.page-about-facts {
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(143, 24, 255, 0.14);
+    box-shadow: 0 14px 42px rgba(15, 23, 42, 0.07);
+    background: linear-gradient(165deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 1) 100%);
+}
+
+.page-about-facts-table th {
+    width: 34%;
+    max-width: 12rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: rgba(15, 23, 42, 0.55);
+    background: rgba(143, 24, 255, 0.06);
+    border-right: 1px solid rgba(143, 24, 255, 0.1);
+    vertical-align: top;
+    padding: 1rem 1.1rem;
+}
+
+.page-about-facts-table td {
+    font-size: 0.9rem;
+    line-height: 1.55;
+    padding: 1rem 1.15rem;
+    color: rgba(15, 23, 42, 0.88);
+}
+
+.page-about-facts-table tbody tr:not(:last-child) th,
+.page-about-facts-table tbody tr:not(:last-child) td {
+    border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+}
+
+@media (max-width: 575.98px) {
+    .page-about-facts-table th {
+        width: 38%;
+        max-width: none;
+        font-size: 0.72rem;
+        padding: 0.75rem 0.65rem;
+    }
+
+    .page-about-facts-table td {
+        font-size: 0.82rem;
+        padding: 0.75rem 0.65rem;
+    }
+}
+
+/* In-page anchors clear the sticky navbar */
+#services,
+#faq,
+#company-policies,
+#request-callback-form,
+#contact {
+    scroll-margin-top: 5.5rem;
+}
+
+/* -------------------------------------------------------------------------
+   Mobile-first: readability, tap targets, no horizontal drift
+   ------------------------------------------------------------------------- */
+html {
+    -webkit-text-size-adjust: 100%;
+}
+
+.hero-title {
+    font-size: clamp(1.35rem, 5.25vw + 0.35rem, 2.125rem);
+    line-height: 1.22;
+}
+
+.services-intro-title {
+    font-size: clamp(1.5rem, 4.85vw + 0.35rem, 2.75rem);
+    line-height: 1.18;
+}
+
+.direction-section-title {
+    font-size: clamp(1.35rem, 3.85vw + 0.65rem, 2.35rem);
+    line-height: 1.2;
+}
+
+.faq-hero-img {
+    max-width: min(100%, 420px);
+}
+
+@media (max-width: 991.98px) {
+
+    /* Service mosaic: lose rigid desktop lattice on phones */
+    #services .ux-inline-12 {
+        border-right: none !important;
+        border-bottom: 1px solid rgba(15, 23, 42, 0.1);
+        padding-bottom: 0.75rem;
+    }
+
+    #services .ux-inline-14 {
+        border-bottom: none;
+    }
+
+    #services .ux-inline-15 {
+        border-right: none !important;
+    }
+
+    /* Prevent ultra-wide pasted layout numbers from blowing the viewport */
+    .ux-inline-7,
+    .ux-inline-16,
+    .ux-inline-39 {
+        max-width: 100%;
+    }
+
+    .ux-inline-8,
+    .ux-inline-13 {
+        max-width: 100%;
+        width: fit-content;
+    }
+
+    [data-tabs] .ux-inline-20 {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.4rem;
+        padding: 10px;
+    }
+
+    [data-tabs] .ux-inline-21,
+    [data-tabs] .ux-inline-22 {
+        font-size: clamp(0.7rem, 2.85vw + 0.38rem, 1rem);
+        padding: 6px 10px;
+        line-height: 1.2;
+        text-align: center;
+    }
+
+    .card4 .ux-inline-17,
+    #services .ux-inline-17 {
+        font-size: clamp(0.8125rem, 2.2vw + 0.52rem, 0.9375rem) !important;
+        line-height: 1.55 !important;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .ux-inline-29 {
+        width: 100% !important;
+        max-width: 100%;
+        height: auto !important;
+        min-height: 0 !important;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .navbar-brand img {
+        width: clamp(160px, 52vw, 240px);
+        height: auto;
+    }
+
+    /* Comfortable fields on phones + fewer iOS auto-zoom quirks */
+    .form-control:not(textarea),
+    .form-select,
+    .form-control-1 {
+        font-size: 16px !important;
+    }
+
+    .ux-inline-27 {
+        display: block;
+        width: 100%;
+        text-align: center;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        box-sizing: border-box;
+    }
+
+    .page-service-hero-img {
+        max-height: 240px;
+        object-fit: contain;
+    }
+
+    /* FAQ toggles sized for thumbs */
+    [data-faq-toggle] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 44px;
+        min-height: 44px;
+    }
+
+    /* Footer typography doesn't need desktop heading scale */
+    .ux-inline-40 h2,
+    .ux-inline-40 h5 {
+        word-wrap: break-word;
+        overflow-wrap: anywhere;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .navbar .navbar-collapse .nav-link {
+        padding-top: 0.7rem;
+        padding-bottom: 0.7rem;
+    }
+
+    /* Collapsed mega-background: lighten vertical pressure */
+    .navbar .dropdown-menu-services .dropdown-item {
+        padding-top: 0.75rem;
+        padding-bottom: 0.75rem;
+        white-space: normal;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ux-inline-46 {
+        animation: none !important;
+    }
 }

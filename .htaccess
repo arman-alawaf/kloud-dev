@@ -4,3 +4,17 @@
     Require all granted
   </Files>
 </IfModule>
+
+# ------------------------------------------------------------------------------
+# Browser cache (cPanel / Apache): you cannot clear visitors’ caches from the
+# server. Local CSS/JS URLs get ?v=… from assets/js/site-boot.js (single rev).
+# HTML revalidates so pages pick up an updated site-boot.js after deploy.
+#
+# Workflow: bump KLOUD_ASSET_REV only in assets/js/site-boot.js when you change
+# assets/css/style.css, assets/css/inline-extracted.css, or assets/js/main.js.
+# ------------------------------------------------------------------------------
+<IfModule mod_headers.c>
+  <FilesMatch "\.(html|htm)$">
+    Header set Cache-Control "max-age=0, must-revalidate, public"
+  </FilesMatch>
+</IfModule>

@@ -135,7 +135,7 @@
 }
 
 .ux-inline-16 {
-  width: 300px;
+  /* width: 300px; */
   height: auto;
   background-image: url(../img/back\ box.png);
   background-repeat: no-repeat;

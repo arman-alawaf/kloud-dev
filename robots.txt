@@ -1,0 +1,9 @@
+# Kloud Technologies Limited — public web
+User-agent: *
+Allow: /
+
+# PHP mail handler; no need to index
+Disallow: /send-callback.php
+Disallow: /server/
+
+Sitemap: https://kloud.com.bd/sitemap.xml

@@ -275,6 +275,34 @@
   }
 })();
 
+(function initContactPackageQuery() {
+  var select = document.getElementById("package-select");
+  if (!select || typeof URLSearchParams === "undefined") return;
+
+  var params = new URLSearchParams(window.location.search);
+  var key = params.get("package");
+  if (!key) return;
+
+  var opts = Array.from(select.options);
+  var matched = opts.some(function (opt) {
+    if (opt.value === key) {
+      select.value = opt.value;
+      return true;
+    }
+    return false;
+  });
+  if (!matched) return;
+
+  var scrollTarget =
+    document.getElementById("request-callback-form") ||
+    document.getElementById("contact-form-section");
+  if (scrollTarget && scrollTarget.scrollIntoView) {
+    window.requestAnimationFrame(function () {
+      scrollTarget.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  }
+})();
+
 (function initBackToTop() {
   var backToTopLink = document.getElementById("back-to-top-link");
   if (!backToTopLink) return;
@@ -291,6 +319,47 @@
 
   window.addEventListener("scroll", toggleBackToTopVisibility, { passive: true });
   toggleBackToTopVisibility();
+})();
+
+(function initNavbarCollapseOnNavigate() {
+  var collapseEl = document.getElementById("navbarSupportedContent");
+  if (!collapseEl || !window.bootstrap || !window.bootstrap.Collapse) return;
+
+  collapseEl.addEventListener(
+    "click",
+    function (event) {
+      var a = event.target && event.target.closest ? event.target.closest("a") : null;
+      if (!a || !collapseEl.contains(a)) return;
+      if (a.getAttribute("data-bs-toggle") === "dropdown") return;
+      if (a.classList.contains("dropdown-toggle")) return;
+
+      var href = (a.getAttribute("href") || "").trim();
+      if (!href || href === "#") return;
+
+      var inst = window.bootstrap.Collapse.getInstance(collapseEl);
+      if (!inst) return;
+
+      if (href.charAt(0) === "#") {
+        inst.hide();
+        return;
+      }
+
+      if (/^mailto:/i.test(href) || /^tel:/i.test(href)) {
+        inst.hide();
+        return;
+      }
+
+      if (
+        /^https?:\/\//i.test(href) ||
+        /\.html([#?]|$)/i.test(href) ||
+        /\.htm([#?]|$)/i.test(href) ||
+        href.indexOf("/") === 0
+      ) {
+        inst.hide();
+      }
+    },
+    false
+  );
 })();
 
 (function initComingSoonPremiumPopups() {
